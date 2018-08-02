@@ -43,21 +43,21 @@ SINGLE_DEPLOYMENT(){
 }
 
 #Get om version
-OM_VERSION=$($CMD -t $OPS_MGR_HOST -u $OPS_MGR_USR -p $OPS_MGR_PWD -k staged-products | grep p-bosh | cut -d'|' -f3)
+OM_VERSION=$($CMD -t ${OPS_MGR_HOST} -u ${OPS_MGR_USR} -p ${OPS_MGR_PWD} -k staged-products | grep p-bosh | cut -d'|' -f3)
 OM_VERSION=${OM_VERSION:1:3}
-echo $OM_VERSION
-if [[ "$OM_VERSION" == "2.2" || "$OM_VERSION" == "2.3" || "$OM_VERSION" == "2.4" ]]; then
+echo ${OM_VERSION}
+if [[ "${OM_VERSION}" == "2.2" || "${OM_VERSION}" == "2.3" || "${OM_VERSION}" == "2.4" ]]; then
   USE_OM_FOR_SINGLE_DEPLOYMENT=true
 else
   USE_OM_FOR_SINGLE_DEPLOYMENT=false
 fi
 #Check if OM Version is 2.2+
 
-if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
-  #check if we can get the deployment name, if not we will not use the new signle deployment feature.
-  echo "inside if"
-  PRODUCTS=$(om -t opsman.gcp.sandyg.org -u admin -p Piv0tal! -k pending-changes | grep install | cut -d'|' -f2)
-  echo $PRODUCTS
+if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
+  #check all the pending installs
+  # currently not checking for delete or other states, just install
+  PRODUCTS=$($CMD -t opsman.gcp.sandyg.org -u admin -p Piv0tal! -k pending-changes | grep install | cut -d'|' -f2)
+  echo ${PRODUCTS}
   myarr=( $PRODUCTS )
   SIZE=${#myarr[@]}
   echo $SIZE
@@ -72,7 +72,7 @@ if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
     DEPLOY_ARRAY=${DEPLOY_ARRAY}]
 
     echo $DEPLOY_ARRAY
-    SINGLE_DEPLOYMENT $DEPLOY_ARRAY
+    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
   elif [[ $SIZE == 0 ]]
   then
     ###Can this happen???? If this does we should use old OM deploy
@@ -81,7 +81,7 @@ if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
   else
     echo "size is one"
     DEPLOY_ARRAY=[\"$PRODUCTS\"]
-    SINGLE_DEPLOYMENT $DEPLOY_ARRAY
+    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
   fi
 
 else
