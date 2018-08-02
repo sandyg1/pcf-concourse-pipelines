@@ -36,7 +36,7 @@ SINGLE_DEPLOYMENT(){
   #Applying changes to the director and products specified in `deploy_products` array
   curl "https://$OPS_MGR_HOST/api/v0/installations" \
       -X POST \
-      -H "Authorization: Bearer "$TOKEN" \
+      -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
       -d '{ "deploy_products": $1,"ignore_warnings": true }'
 
