@@ -31,17 +31,15 @@ SINGLE_DEPLOYMENT(){
 
   #USE om to find the guid of the product to apply changes.
   #May need a param passed in to help identify
-  PRODUCT_GUID   #find guid
+  #PRODUCT_GUID   #find guid
 
   #Applying changes to the director and products specified in `deploy_products` array
-  curl "https://example.com/api/v0/installations" \
+  curl "https://$OPS_MGR_HOST/api/v0/installations" \
       -X POST \
       -H "Authorization: Bearer "$TOKEN" \
       -H "Content-Type: application/json" \
-      -d '{
-    "deploy_products": ["$1"],
-    "ignore_warnings": true
-  }'
+      -d '{ "deploy_products": $1,"ignore_warnings": true }'
+
 }
 
 #Get om version
@@ -75,7 +73,8 @@ if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
 
     echo $DEPLOY_ARRAY
     SINGLE_DEPLOYMENT $DEPLOY_ARRAY
-  elif [[ $SIZE == 0 ]]; then
+  elif [[ $SIZE == 0 ]]
+  then
     ###Can this happen???? If this does we should use old OM deploy
     echo "size is 0, something fishy"
     OLD_OM_DEPLOY
