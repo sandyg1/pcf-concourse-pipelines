@@ -49,9 +49,6 @@ OM_VERSION=$($CMD -t $OPS_MGR_HOST -u $OPS_MGR_USR -p $OPS_MGR_PWD -k staged-pro
 OM_VERSION=${OM_VERSION:1:3}
 echo $OM_VERSION
 if [[ "$OM_VERSION" == "2.2" || "$OM_VERSION" == "2.3" || "$OM_VERSION" == "2.4" ]]; then
-
-
-
   USE_OM_FOR_SINGLE_DEPLOYMENT=true
 else
   USE_OM_FOR_SINGLE_DEPLOYMENT=false
@@ -79,7 +76,6 @@ if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
     echo $DEPLOY_ARRAY
     SINGLE_DEPLOYMENT $DEPLOY_ARRAY
   elif [[ $SIZE == 0 ]]; then
-
     ###Can this happen???? If this does we should use old OM deploy
     echo "size is 0, something fishy"
     OLD_OM_DEPLOY
