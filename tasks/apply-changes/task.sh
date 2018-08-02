@@ -34,7 +34,7 @@ SINGLE_DEPLOYMENT(){
   #PRODUCT_GUID   #find guid
 
   #Applying changes to the director and products specified in `deploy_products` array
-  curl "https://$OPS_MGR_HOST/api/v0/installations" \
+  curl "https://$OPS_MGR_HOST/api/v0/installations" -k \
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
@@ -45,7 +45,7 @@ SINGLE_DEPLOYMENT(){
 #Get om version
 OM_VERSION=$($CMD -t ${OPS_MGR_HOST} -u ${OPS_MGR_USR} -p ${OPS_MGR_PWD} -k staged-products | grep p-bosh | cut -d'|' -f3)
 OM_VERSION=${OM_VERSION:1:3}
-echo ${OM_VERSION}
+echo "OM version is ${OM_VERSION}"
 if [[ "${OM_VERSION}" == "2.2" || "${OM_VERSION}" == "2.3" || "${OM_VERSION}" == "2.4" ]]; then
   USE_OM_FOR_SINGLE_DEPLOYMENT=true
 else
@@ -57,7 +57,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
   #check all the pending installs
   # currently not checking for delete or other states, just install
   PRODUCTS=$($CMD -t opsman.gcp.sandyg.org -u admin -p Piv0tal! -k pending-changes | grep install | cut -d'|' -f2)
-  echo ${PRODUCTS}
+  #echo ${PRODUCTS}
   myarr=( $PRODUCTS )
   SIZE=${#myarr[@]}
   echo $SIZE
