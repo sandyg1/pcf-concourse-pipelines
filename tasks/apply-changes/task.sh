@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set +x
+
 if [[ $DEBUG == true ]]; then
   set -ex
 else
@@ -62,7 +64,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
   SIZE=${#myarr[@]}
   echo $SIZE
   if [[ $SIZE > 1 ]]; then
-    echo "size is >1"
+    #echo "size is >1"
     DEPLOY_ARRAY="["
     for i in "${myarr[@]}"
     do
@@ -79,7 +81,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
     echo "size is 0, something fishy"
     OLD_OM_DEPLOY
   else
-    echo "size is one"
+    #echo "size is one"
     DEPLOY_ARRAY=[\"$PRODUCTS\"]
     SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
   fi
