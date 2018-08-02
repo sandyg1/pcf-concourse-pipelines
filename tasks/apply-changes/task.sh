@@ -80,7 +80,7 @@ if [[ $USE_OM_FOR_SINGLE_DEPLOYMENT ]]; then
     echo "size is 0, something fishy"
     OLD_OM_DEPLOY
   else
-    echo "size is 1"
+    echo "size is one"
     DEPLOY_ARRAY=[\"$PRODUCTS\"]
     SINGLE_DEPLOYMENT $DEPLOY_ARRAY
   fi
