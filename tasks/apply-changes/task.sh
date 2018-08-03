@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set +x
+set -x
 
 if [[ $DEBUG == true ]]; then
   set -ex
@@ -36,6 +36,7 @@ SINGLE_DEPLOYMENT(){
   #PRODUCT_GUID   #find guid
 
   #Applying changes to the director and products specified in `deploy_products` array
+  echo
   curl "https://$OPS_MGR_HOST/api/v0/installations" -k \
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
