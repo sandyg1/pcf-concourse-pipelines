@@ -46,26 +46,25 @@ if [[ "${OM_VERSION}" == "2.2" || "${OM_VERSION}" == "2.3" || "${OM_VERSION}" ==
   USE_OM_FOR_SINGLE_DEPLOYMENT=true
 else
   USE_OM_FOR_SINGLE_DEPLOYMENT=false
+  OLD_OM_DEPLOY
 fi
-#Check if OM Version is 2.2+
 
 if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
   #check all the pending installs
   # currently not checking for delete or other states, just install
-  PRODUCTS=$($CMD -t opsman.gcp.sandyg.org -u admin -p Piv0tal! -k pending-changes | grep install | cut -d'|' -f2)
+  PRODUCTS=$($CMD -t ${OPS_MGR_HOST} -u ${OPS_MGR_USR} -p ${OPS_MGR_PWD} -k pending-changes | grep install | cut -d'|' -f2)
   #echo ${PRODUCTS}
   myarr=( $PRODUCTS )
   SIZE=${#myarr[@]}
   echo $SIZE
   if [[ $SIZE > 1 ]]; then
     #echo "size is >1"
-    DEPLOY_ARRAY="["
+    DEPLOY_ARRAY=""
     for i in "${myarr[@]}"
     do
         DEPLOY_ARRAY=${DEPLOY_ARRAY}\"${i}\",
     done
     DEPLOY_ARRAY=${DEPLOY_ARRAY%,}
-    DEPLOY_ARRAY=${DEPLOY_ARRAY}]
 
     echo $DEPLOY_ARRAY
     SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
@@ -76,10 +75,9 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
     OLD_OM_DEPLOY
   else
     #echo "size is one"
-    DEPLOY_ARRAY=[\"$PRODUCTS\"]
-    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
+
+    SINGLE_DEPLOYMENT "$PRODUCTS"
   fi
 
-else
-  OLD_OM_DEPLOY
+
 fi
