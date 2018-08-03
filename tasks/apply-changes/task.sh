@@ -80,7 +80,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
     DEPLOY_ARRAY=${DEPLOY_ARRAY}]
 
     echo $DEPLOY_ARRAY
-    SINGLE_DEPLOYMENT DEPLOY_ARRAY
+    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
   elif [[ $SIZE == 0 ]]
   then
     ###Can this happen???? If this does we should use old OM deploy
@@ -89,7 +89,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
   else
     #echo "size is one"
     DEPLOY_ARRAY=[\"$PRODUCTS\"]
-    SINGLE_DEPLOYMENT DEPLOY_ARRAY
+    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
   fi
 
 else
