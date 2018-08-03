@@ -41,7 +41,9 @@ SINGLE_DEPLOYMENT(){
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
-      -d '{ "deploy_products": $1,"ignore_warnings": true }'
+      -d '{ "deploy_products": ${1} ,
+      "ignore_warnings": true
+    }'
 
   echo "Executed command"
 
