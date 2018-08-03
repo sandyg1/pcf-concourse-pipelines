@@ -24,19 +24,9 @@ function OLD_OM_DEPLOY (){
 }
 
 function SINGLE_DEPLOYMENT(){
-  uaac target https://$OPS_MGR_HOST/uaa --skip-ssl-validation
-  #login using admin credentials
-  uaac token owner get opsman -s "" $OPS_MGR_USR -p $OPS_MGR_PWD
-  #get token
-  TOKEN=$(uaac context | grep access_token | cut -d':' -f2 | cut -d' ' -f2)
 
-  #USE om to find the guid of the product to apply changes.
-  #May need a param passed in to help identify
-  #PRODUCT_GUID   #find guid
-
-  #Applying changes to the director and products specified in `deploy_products` array
-  echo
-  curl "https://$OPS_MGR_HOST/api/v0/installations" -k \
+  $CMD -t ${OPS_MGR_HOST} -u ${OPS_MGR_USR} -p ${OPS_MGR_PWD} -k \
+      curl \
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
@@ -44,7 +34,8 @@ function SINGLE_DEPLOYMENT(){
       "ignore_warnings": true
     }'
 
-  #now get output and follow the install
+  #now get output and follow the install $?
+  #Display if error, etc
 
 }
 
