@@ -42,7 +42,7 @@ function SINGLE_DEPLOYMENT(){
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
-      -d '{ "deploy_products": "${!DEPLOYMENTS}" ,
+      -d '{ "deploy_products": '$DEPLOYMENTS' ,
       "ignore_warnings": true
     }'
 
