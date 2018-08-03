@@ -24,8 +24,6 @@ function OLD_OM_DEPLOY (){
 }
 
 function SINGLE_DEPLOYMENT(){
-  echo $1
-  DEPLOYMENTS=$1
   uaac target https://$OPS_MGR_HOST/uaa --skip-ssl-validation
   #login using admin credentials
   uaac token owner get opsman -s "" $OPS_MGR_USR -p $OPS_MGR_PWD
@@ -42,11 +40,11 @@ function SINGLE_DEPLOYMENT(){
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
-      -d '{ "deploy_products": '$DEPLOYMENTS' ,
+      -d '{ "deploy_products": '$1' ,
       "ignore_warnings": true
     }'
 
-  echo "Executed command"
+  #now get output and follow the install
 
 }
 
