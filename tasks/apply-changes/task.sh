@@ -17,13 +17,13 @@ CMD=./om-cli/om-linux
 USE_OM_FOR_SINGLE_DEPLOYMENT=false
 
 
-OLD_OM_DEPLOY (){
+function OLD_OM_DEPLOY (){
 
    $CMD -t https://$OPS_MGR_HOST -k -u $OPS_MGR_USR -p $OPS_MGR_PWD apply-changes  --ignore-warnings true
 
 }
 
-SINGLE_DEPLOYMENT(){
+function SINGLE_DEPLOYMENT(){
 
   uaac target https://$OPS_MGR_HOST/uaa --skip-ssl-validation
   #login using admin credentials
