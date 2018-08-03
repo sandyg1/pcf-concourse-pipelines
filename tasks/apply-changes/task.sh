@@ -8,7 +8,7 @@ else
   set -e
 fi
 
-# Need uaac-cli on container or install it
+
 #Requires curl
 
 chmod +x om-cli/om-linux
@@ -24,7 +24,7 @@ function OLD_OM_DEPLOY (){
 }
 
 function SINGLE_DEPLOYMENT(){
-
+  echo "Running deployment on the following deployments '$1'"
   $CMD -t ${OPS_MGR_HOST} -u ${OPS_MGR_USR} -p ${OPS_MGR_PWD} -k \
       curl \
       -X POST \
@@ -34,9 +34,8 @@ function SINGLE_DEPLOYMENT(){
       "ignore_warnings": true
     }'
 
-  #now get output and follow the install $?
-  #Display if error, etc
-
+  # Now sleep 30 s and run apply changes to get the output
+  OLD_OM_DEPLOY
 }
 
 #Get om version
