@@ -4,7 +4,7 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source: {repository: sandyg1/uaac}
+  source: {repository: starkandwayne/concourse}
 
 params:
   DEBUG:
