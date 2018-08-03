@@ -24,7 +24,8 @@ function OLD_OM_DEPLOY (){
 }
 
 function SINGLE_DEPLOYMENT(){
-
+  echo $1
+  DEPLOYMENTS=$1
   uaac target https://$OPS_MGR_HOST/uaa --skip-ssl-validation
   #login using admin credentials
   uaac token owner get opsman -s "" $OPS_MGR_USR -p $OPS_MGR_PWD
@@ -41,7 +42,7 @@ function SINGLE_DEPLOYMENT(){
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
-      -d '{ "deploy_products": ${1} ,
+      -d '{ "deploy_products": ${DEPLOYMENTS} ,
       "ignore_warnings": true
     }'
 
@@ -79,7 +80,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
     DEPLOY_ARRAY=${DEPLOY_ARRAY}]
 
     echo $DEPLOY_ARRAY
-    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
+    SINGLE_DEPLOYMENT DEPLOY_ARRAY
   elif [[ $SIZE == 0 ]]
   then
     ###Can this happen???? If this does we should use old OM deploy
@@ -88,7 +89,7 @@ if [[ ${USE_OM_FOR_SINGLE_DEPLOYMENT} ]]; then
   else
     #echo "size is one"
     DEPLOY_ARRAY=[\"$PRODUCTS\"]
-    SINGLE_DEPLOYMENT "$DEPLOY_ARRAY"
+    SINGLE_DEPLOYMENT DEPLOY_ARRAY
   fi
 
 else
